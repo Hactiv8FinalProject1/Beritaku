@@ -5,36 +5,39 @@ import { Link } from "react-router-dom";
 import { FaBookmark, FaInfoCircle } from "react-icons/fa";
 import "../styles/App.css";
 import { fetchIndonesiaData } from "../store/reducers/indonesia";
-import { saveIndonesiaArticle, unsaveIndonesiaArticle } from "../store/reducers/saved";
+import {
+  saveIndonesiaArticle,
+  unsaveIndonesiaArticle,
+} from "../store/reducers/saved";
 
 function Indonesia() {
   const dispatch = useDispatch();
   const indonesiaData = useSelector((state) => state.indonesia.data);
   const savedArticles = useSelector((state) => state.saved.indonesiaSaved);
 
-   useEffect(() => {
-     dispatch(fetchIndonesiaData());
-   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchIndonesiaData());
+  }, [dispatch]);
 
-   const formatDate = (publishedAt) => {
-     const date = new Date(publishedAt);
-     const options = { year: "numeric", month: "long", day: "numeric" };
-     return date.toLocaleDateString(undefined, options);
-   };
+  const formatDate = (publishedAt) => {
+    const date = new Date(publishedAt);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  };
 
-   const savedIndonesiaArticleIndexes = new Set(
-     savedArticles.map((article) => article.index)
-   );
+  const savedIndonesiaArticleIndexes = new Set(
+    savedArticles.map((article) => article.index)
+  );
 
-   const handleSaved = (article, index) => {
-     const isSaved = savedIndonesiaArticleIndexes.has(index);
+  const handleSaved = (article, index) => {
+    const isSaved = savedIndonesiaArticleIndexes.has(index);
 
-     if (isSaved) {
-       dispatch(unsaveIndonesiaArticle({ index }));
-     } else {
-       dispatch(saveIndonesiaArticle({ ...article, index }));
-     }
-   };
+    if (isSaved) {
+      dispatch(unsaveIndonesiaArticle({ index }));
+    } else {
+      dispatch(saveIndonesiaArticle({ ...article, index }));
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem("IndonesiaSaved", JSON.stringify(savedArticles));
@@ -58,22 +61,39 @@ function Indonesia() {
                   height: "90%",
                 }}
               >
-                <Link
-                  to={`/detailsindo/${index}`}
-                  style={{ textDecoration: "none" }}
-                ></Link>
+                {article.urlToImage ? (
+                  <img
+                    src={article.urlToImage}
+                    alt={article.title}
+                    style={{
+                      width: "100%",
+                      height: "205px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                ) : (
+                  <img
+                    src="https://placehold.co/600x400?text=No-Image"
+                    alt={article.title || "No Image"}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      borderRadius: "10px",
+                    }}
+                  />
+                )}
                 <Card.Body className="card-content">
+                  <div style={{ color: "#5A5A5A" }}>
+                    {article.author} | {formatDate(article.publishedAt)}
+                  </div>
                   <Link
                     to={`/detailsindo/${index}`}
                     style={{ textDecoration: "none", color: "black" }}
                   >
-                    <Card.Title className="card-title text-center">
+                    <Card.Title className="card-title">
                       <b>{article.title}</b>
                     </Card.Title>
                   </Link>
-                  <div style={{ color: "#5A5A5A" }}>
-                    {formatDate(article.publishedAt)}
-                  </div>
                 </Card.Body>
                 <Row className="container">
                   <Col md={10} className="d-flex justify-content-end">

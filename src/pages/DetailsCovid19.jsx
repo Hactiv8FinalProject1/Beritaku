@@ -32,7 +32,7 @@ function DetailsCovid19() {
   const publishedAtDate = new Date(detailsCovid.publishedAt);
   const publishedAtFormatted = publishedAtDate.toLocaleString("en-US", {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
@@ -63,13 +63,23 @@ function DetailsCovid19() {
         <p className="text-center" style={{ color: "#5A5A5A" }}>
           {publishedAtFormatted}
         </p>
-        {detailsCovid.urlToImage && (
+        {detailsCovid.urlToImage ? (
           <img
             src={detailsCovid.urlToImage}
             alt={detailsCovid.title}
             style={{
               width: "100%",
               height: "auto",
+            }}
+          />
+        ) : (
+          <img
+            src="https://placehold.co/600x400?text=No-Image"
+            alt={detailsCovid.title || "No Image"}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "10px",
             }}
           />
         )}

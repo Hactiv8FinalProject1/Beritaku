@@ -28,7 +28,7 @@ function DetailsIndo() {
   const publishedAtDate = new Date(detailsIndo.publishedAt);
   const publishedAtFormatted = publishedAtDate.toLocaleString("en-US", {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
@@ -42,10 +42,7 @@ function DetailsIndo() {
           Beritaku
         </Link>
         <FaAngleRight />
-        <Link
-          to={`/`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
+        <Link to={`/`} style={{ textDecoration: "none", color: "black" }}>
           Indonesia
         </Link>
       </p>
@@ -59,13 +56,23 @@ function DetailsIndo() {
         <p className="text-center" style={{ color: "#5A5A5A" }}>
           {publishedAtFormatted}
         </p>
-        {detailsIndo.urlToImage && (
+        {detailsIndo.urlToImage ? (
           <img
             src={detailsIndo.urlToImage}
             alt={detailsIndo.title}
             style={{
               width: "100%",
               height: "auto",
+            }}
+          />
+        ) : (
+          <img
+            src="https://placehold.co/600x400?text=No-Image"
+            alt={detailsIndo.title || "No Image"}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "10px",
             }}
           />
         )}

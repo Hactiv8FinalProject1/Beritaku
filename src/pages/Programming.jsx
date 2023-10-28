@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchProgrammingData } from "../store/reducers/programming.js";
 import "../styles/App.css";
-import { saveProgrammingArticle, unsaveProgrammingArticle } from "../store/reducers/saved";
+import {
+  saveProgrammingArticle,
+  unsaveProgrammingArticle,
+} from "../store/reducers/saved";
 
 const formatDate = (publishedAt) => {
   const date = new Date(publishedAt);
-  const options = { year: "numeric", month: "long", day: "numeric" };
+  const options = { year: "numeric", month: "short", day: "numeric" };
   return date.toLocaleDateString(undefined, options);
 };
 
@@ -68,18 +71,39 @@ function Programming() {
                 height: "90%",
               }}
             >
+              {article.urlToImage ? (
+                <img
+                  src={article.urlToImage}
+                  alt={article.title}
+                  style={{
+                    width: "100%",
+                    height: "205px",
+                    borderRadius: "10px",
+                  }}
+                />
+              ) : (
+                <img
+                  src="https://placehold.co/600x400?text=No-Image"
+                  alt={article.title || "No Image"}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: "10px",
+                  }}
+                />
+              )}
               <Card.Body className="card-content">
+                <div style={{ color: "#5A5A5A" }}>
+                  {article.author} | {formatDate(article.publishedAt)}
+                </div>
                 <Link
                   to={`/detailsprogramming/${index}`}
                   style={{ textDecoration: "none", color: "black" }}
                 >
-                  <Card.Title className="card-title text-center">
+                  <Card.Title className="card-title ">
                     <b>{article.title}</b>
                   </Card.Title>
                 </Link>
-                <div style={{ color: "#5A5A5A" }}>
-                  {formatDate(article.publishedAt)}
-                </div>
               </Card.Body>
               <Row className="container">
                 <Col md={10} className="d-flex justify-content-end">

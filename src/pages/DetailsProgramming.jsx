@@ -19,16 +19,20 @@ function DetailsProgramming() {
     return <div>Loading...</div>;
   }
 
-  if (index < 0 || index >= programmingData.articles.length) {
+  const sortedArticles = [...programmingData.articles].sort(
+    (a, b) => new Date(b.publishedAt) - new Date(a.publishedAt)
+  );
+
+  if (index < 0 || index >= sortedArticles.length) {
     return <div>No data available for this article.</div>;
   }
 
-  const detailsProgramming = programmingData.articles[index];
+  const detailsProgramming = sortedArticles[index];
 
   const publishedAtDate = new Date(detailsProgramming.publishedAt);
   const publishedAtFormatted = publishedAtDate.toLocaleString("en-US", {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
@@ -59,13 +63,23 @@ function DetailsProgramming() {
         <p className="text-center" style={{ color: "#5A5A5A" }}>
           {publishedAtFormatted}
         </p>
-        {detailsProgramming.urlToImage && (
+        {detailsProgramming.urlToImage ? (
           <img
             src={detailsProgramming.urlToImage}
             alt={detailsProgramming.title}
             style={{
               width: "100%",
               height: "auto",
+            }}
+          />
+        ) : (
+          <img
+            src="https://placehold.co/600x400?text=No-Image"
+            alt={detailsProgramming.title || "No Image"}
+            style={{
+              width: "100%",
+              height: "auto",
+              borderRadius: "10px",
             }}
           />
         )}
