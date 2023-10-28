@@ -49,20 +49,8 @@ function Covid19() {
   };
 
   useEffect(() => {
-    const savedCovidArticlesFromLocalStorage =
-      localStorage.getItem("covidSaved");
-    if (savedCovidArticlesFromLocalStorage) {
-      const savedArticles = JSON.parse(savedCovidArticlesFromLocalStorage);
-      if (
-        savedArticles.length > 0 &&
-        savedArticles.length !== savedArticles.length
-      ) {
-        savedArticles.forEach((article) => {
-          dispatch(saveCovidArticle(article));
-        });
-      }
-    }
-  }, [dispatch]);
+    localStorage.setItem("covidSaved", JSON.stringify(savedArticles));
+  }, [savedArticles]);
 
   return (
     <div className="container" style={{ paddingTop: "80px" }}>

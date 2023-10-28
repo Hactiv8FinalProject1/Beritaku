@@ -37,20 +37,8 @@ function Indonesia() {
    };
 
   useEffect(() => {
-    const savedIndonesiaArticlesFromLocalStorage =
-      localStorage.getItem("indonesiaSaved");
-    if (savedIndonesiaArticlesFromLocalStorage) {
-      const savedArticles = JSON.parse(savedIndonesiaArticlesFromLocalStorage);
-      if (
-        savedArticles.length > 0 &&
-        savedArticles.length !== savedArticles.length
-      ) {
-        savedArticles.forEach((article) => {
-          dispatch(saveIndonesiaArticle(article));
-        });
-      }
-    }
-  }, [dispatch]);
+    localStorage.setItem("IndonesiaSaved", JSON.stringify(savedArticles));
+  }, [savedArticles]);
 
   return (
     <div className="container" style={{ paddingTop: "80px" }}>

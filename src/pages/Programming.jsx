@@ -48,20 +48,8 @@ function Programming() {
   };
 
   useEffect(() => {
-    const savedProgrammingArticlesFromLocalStorage =
-      localStorage.getItem("programmingSaved");
-    if (savedProgrammingArticlesFromLocalStorage) {
-      const savedArticles = JSON.parse(savedProgrammingArticlesFromLocalStorage);
-      if (
-        savedArticles.length > 0 &&
-        savedArticles.length !== savedArticles.length
-      ) {
-        savedArticles.forEach((article) => {
-          dispatch(saveProgrammingArticle(article));
-        });
-      }
-    }
-  }, [dispatch]);
+    localStorage.setItem("programmingSaved", JSON.stringify(savedArticles));
+  }, [savedArticles]);
 
   return (
     <div className="container" style={{ paddingTop: "80px" }}>
