@@ -1,0 +1,18 @@
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+.bg {
+  background-color: #C9D9E7;
+}
+
+.card {
+  background-color: #1b3260;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #C9D9E7;
+}
